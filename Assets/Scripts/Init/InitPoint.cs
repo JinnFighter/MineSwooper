@@ -6,14 +6,13 @@ namespace Init
 {
     public class InitPoint : MonoBehaviour
     {
-        private readonly List<IInitStep> _initSteps = new()
-        {
-            new ServicesInitStep()
-        };
-
         private async void Awake()
         {
-            foreach (var initStep in _initSteps) await initStep.Execute();
+            var initSteps = new List<IInitStep>
+            {
+                new ServicesInitStep()
+            };
+            foreach (var initStep in initSteps) await initStep.Execute();
         }
     }
 }
