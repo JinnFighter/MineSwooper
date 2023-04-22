@@ -1,3 +1,4 @@
+using Core.Containers;
 using Core.Models;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -22,13 +23,19 @@ namespace Init.InitSteps
 
         private UniTask BindServices()
         {
+            BindContainers();
             BindModels();
             return UniTask.CompletedTask;
         }
 
+        private void BindContainers()
+        {
+            _container.Bind<SpritesContainer>().FromInstance(Resources.Load<SpritesContainer>("SpritesContainer")).AsSingle();
+        }
+
         private void BindModels()
         {
-            _container.Bind<GameFieldModel>();
+            _container.Bind<GameFieldModel>().AsSingle();
         }
 
         private UniTask InitServices()
