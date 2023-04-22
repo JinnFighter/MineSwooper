@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Reactivity;
 using UnityEngine.Events;
 
 namespace Subscription
@@ -20,6 +21,19 @@ namespace Subscription
             caller.AddListener(handler);
             AddSubscription(caller, handler, () => caller.RemoveListener(handler));
             if (invokeImmediately) handler.Invoke();
+        }
+
+        public void ListenEvent<TPropertyType>(IReactiveProperty<TPropertyType> caller, EventHandler<GenericEventArg<TPropertyType>> handler,
+            bool invokeImmediately = false)
+        {
+            if (caller == null)
+                throw new Exception("Attempted to pass null object for event caller");
+            if (handler == null)
+                throw new Exception("Attempted to pass null handler for event");
+
+            caller.OnValueChanged += handler;
+            AddSubscription(caller, handler, () => caller.OnValueChanged -= handler);
+            if(invokeImmediately) handler.Invoke(caller, new GenericEventArg<TPropertyType>(caller.Value));
         }
 
         private void AddSubscription(object notifyContainer, Delegate handler, Action unsubscribeAction)

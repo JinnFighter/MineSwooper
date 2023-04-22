@@ -2,7 +2,8 @@
     "name": "MVVM",
     "rootNamespace": "",
     "references": [
-        "GUID:f51ebe6a0ceec4240a699833d6309b23"
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:e6e783c7cd87d914981befea08b7fc32"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

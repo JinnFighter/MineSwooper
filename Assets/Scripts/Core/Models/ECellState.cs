@@ -2,7 +2,8 @@ namespace Core.Models
 {
     public enum ECellState
     {
-        Empty,
+        Hidden,
+        Opened,
         Marked,
         HasBomb
     }

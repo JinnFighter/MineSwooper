@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Core.Models
 {
     public class GameFieldModel
@@ -11,7 +13,7 @@ namespace Core.Models
             {
                 for (var j = 0; j < width; j++)
                 {
-                    CellsModels[i, j] = new CellModel(ECellState.Empty, false);
+                    CellsModels[i, j] = new CellModel(ECellState.Hidden, false, new Vector2Int(i, j));
                 }
             }
         }

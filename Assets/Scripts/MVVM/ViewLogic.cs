@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Subscription;
 
 namespace MVVM
 {
@@ -10,6 +11,16 @@ namespace MVVM
         private readonly Dictionary<IViewModel, ViewLogic<IViewModel, View>> _registeredLogics =
             new();
 
+        protected ViewLogic(TViewModel viewModel, TView view)
+        {
+            ViewModel = viewModel;
+            View = view;
+        }
+
+        protected SubscriptionAggregator SubscriptionAggregator { get; } = new();
+        protected TViewModel ViewModel { get; }
+        protected TView View { get; }
+
         public void Initialize()
         {
             InitializeInternal();
@@ -19,6 +30,7 @@ namespace MVVM
 
         public void DeInitialize()
         {
+            SubscriptionAggregator.Unsubscribe();
             for (var i = _logics.Count - 1; i >= 0; i++) _logics[i].DeInitialize();
             _logics.Clear();
             _registeredLogics.Clear();
