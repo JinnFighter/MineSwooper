@@ -30,7 +30,10 @@ namespace Init.InitSteps
 
         private void BindContainers()
         {
-            _container.Bind<SpritesContainer>().FromInstance(Resources.Load<SpritesContainer>("SpritesContainer")).AsSingle();
+            _container.Bind<SpritesContainer>().FromInstance(Resources.Load<SpritesContainer>("SpritesContainer"))
+                .AsSingle();
+            _container.Bind<PrefabsContainer>().FromInstance(Resources.Load<PrefabsContainer>("PrefabsContainer"))
+                .AsSingle();
         }
 
         private void BindModels()
