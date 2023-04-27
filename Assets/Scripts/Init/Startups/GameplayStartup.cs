@@ -11,11 +11,14 @@ namespace Init.Startups
 {
     public class GameplayStartup : MonoBehaviour
     {
-        [Inject] private GameFieldModel _gameFieldModel;
-        [Inject] private PrefabsContainer _prefabsContainer;
+        private GameFieldModel _gameFieldModel;
+        private PrefabsContainer _prefabsContainer;
         private readonly Dictionary<CellModel, CellGUIViewLogic> _logics = new();
         void Awake()
         {
+            _gameFieldModel = ProjectContext.Instance.Container.Resolve<GameFieldModel>();
+            _prefabsContainer = ProjectContext.Instance.Container.Resolve<PrefabsContainer>();
+            
             foreach (var cell in _gameFieldModel.CellsModels)
             {
                 _logics[cell] = new CellGUIViewLogic(new CellGUIViewModel(cell),
