@@ -9,10 +9,11 @@ namespace Ui
 {
     public class CellView : View, IPointerClickHandler
     {
-        public UnityEvent<PointerEventData> CellClicked { get; } = new();
         [field: SerializeField] public TextMeshProUGUI BombCountText { get; private set; }
         [field: SerializeField] public Image ClickableImage { get; private set; }
         [field: SerializeField] public Image OpenedImage { get; private set; }
+        public UnityEvent<PointerEventData> CellClicked { get; } = new();
+
         public void OnPointerClick(PointerEventData eventData)
         {
             CellClicked?.Invoke(eventData);
