@@ -5,18 +5,25 @@ namespace Core.Models
 {
     public class CellModel
     {
+        private readonly ReactiveProperty<ECellState> _cellState;
+
         public CellModel(ECellState cellState, bool hasBomb, Vector2Int gridPosition)
         {
-            CellState = new ReactiveProperty<ECellState>(cellState);
+            _cellState = new ReactiveProperty<ECellState>(cellState);
             HasBomb = hasBomb;
             BombsAroundCount = new ReactiveProperty<int>();
             GridPosition = gridPosition;
         }
 
-        public IReactiveProperty<ECellState> CellState { get; }
+        public IReactiveProperty<ECellState> CellState => _cellState;
 
-        public bool HasBomb { get; }
+        public bool HasBomb { get; private set; }
         public IReactiveProperty<int> BombsAroundCount { get; }
         public Vector2Int GridPosition { get; }
+
+        public void PlantBomb()
+        {
+            HasBomb = true;
+        }
     }
 }
