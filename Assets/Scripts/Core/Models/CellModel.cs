@@ -25,5 +25,10 @@ namespace Core.Models
         {
             HasBomb = true;
         }
+
+        public void SetState(ECellState cellState)
+        {
+            _cellState.Value = cellState;
+        }
     }
 }

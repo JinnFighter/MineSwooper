@@ -12,7 +12,7 @@ namespace Core.Services
             var result = new List<Vector2Int>();
             for (var i = 0; i < width; i++)
             for (var j = 0; j < height; j++)
-                if (Random.Range(0f, 1f) > _bombGenerationChance)
+                if (Random.Range(0f, 1f) < _bombGenerationChance)
                     result.Add(new Vector2Int(i, j));
 
             return result;

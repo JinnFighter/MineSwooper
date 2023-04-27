@@ -5,8 +5,11 @@ namespace Ui
 {
     public class GameFieldGUIViewModel : IGameFieldGUIViewModel
     {
+        private readonly GameFieldModel _gameFieldModel;
+
         public GameFieldGUIViewModel(GameFieldModel gameFieldModel)
         {
+            _gameFieldModel = gameFieldModel;
             var cellModels = gameFieldModel.CellsModels;
             var width = cellModels.GetLength(0);
             var height = cellModels.GetLength(1);
@@ -17,9 +20,10 @@ namespace Ui
         }
 
         public ICellGUIViewModel[,] Cells { get; }
+
         public void HandleCellClicked(Vector2Int position)
         {
-            Debug.Log($"clicked cell at : {position}");
+            _gameFieldModel.CheckCellClick(position);
         }
     }
 }
