@@ -13,7 +13,7 @@ namespace Core.Models
             {
                 for (var j = 0; j < width; j++)
                 {
-                    CellsModels[i, j] = new CellModel(ECellState.Hidden, false, new Vector2Int(i, j));
+                    CellsModels[i, j] = new CellModel(ECellState.Marked, false, new Vector2Int(i, j));
                 }
             }
         }

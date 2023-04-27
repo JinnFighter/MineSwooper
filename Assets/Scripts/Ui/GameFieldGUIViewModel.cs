@@ -1,4 +1,5 @@
 ﻿using Core.Models;
+using UnityEngine;
 
 namespace Ui
 {
@@ -16,5 +17,9 @@ namespace Ui
         }
 
         public ICellGUIViewModel[,] Cells { get; }
+        public void HandleCellClicked(Vector2Int position)
+        {
+            Debug.Log($"clicked cell at : {position}");
+        }
     }
 }
