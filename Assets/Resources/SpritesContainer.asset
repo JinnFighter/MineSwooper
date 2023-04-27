@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cfbce0e2f76538418d2b033144b2806, type: 3}
   m_Name: SpritesContainer
   m_EditorClassIdentifier: 
-  BombSprite: {fileID: 0}
+  BombSprite: {fileID: 21300000, guid: c237d5ada9ab38e439c1f6955af02310, type: 3}
+  EmptySprite: {fileID: 21300000, guid: 2c4ea72d980a0934e9d9b5f31e516106, type: 3}
+  MarkedSprite: {fileID: 21300000, guid: 18be224af2384d0499dd3d5d119c6531, type: 3}

@@ -3,6 +3,7 @@ using Core.Containers;
 using Core.Models;
 using MVVM;
 using Reactivity;
+using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Ui
@@ -18,7 +19,7 @@ namespace Ui
         {
             _spritesContainer = ProjectContext.Instance.Container.Resolve<SpritesContainer>();
             SubscriptionAggregator.ListenEvent(ViewModel.CellState, HandleCellStateChanged, true);
-            SubscriptionAggregator.ListenEvent(View.CellButton.onClick, HandleCellButtonClicked);
+            SubscriptionAggregator.ListenEvent(View.CellClicked, HandleCellButtonClicked);
         }
 
         private void HandleCellStateChanged(object sender, GenericEventArg<ECellState> e)
@@ -26,20 +27,20 @@ namespace Ui
             switch (e.Value)
             {
                 case ECellState.Hidden:
-                    View.EmptyImage.gameObject.SetActive(true);
-                    View.EmptyImage.sprite = _spritesContainer.EmptySprite;
+                    View.ClickableImage.gameObject.SetActive(true);
+                    View.ClickableImage.sprite = _spritesContainer.EmptySprite;
                     break;
                 case ECellState.Marked:
-                    View.EmptyImage.gameObject.SetActive(true);
-                    View.EmptyImage.sprite = _spritesContainer.MarkedSprite;
+                    View.ClickableImage.gameObject.SetActive(true);
+                    View.ClickableImage.sprite = _spritesContainer.MarkedSprite;
                     break;
                 case ECellState.HasBomb:
-                    View.EmptyImage.gameObject.SetActive(false);
+                    View.ClickableImage.gameObject.SetActive(false);
                     View.BombCountText.gameObject.SetActive(false);
                     View.OpenedImage.sprite = _spritesContainer.BombSprite;
                     break;
                 case ECellState.Opened:
-                    View.EmptyImage.gameObject.SetActive(false);
+                    View.ClickableImage.gameObject.SetActive(false);
                     View.BombCountText.gameObject.SetActive(ViewModel.BombsAroundCount.Value > 0);
                     if (ViewModel.BombsAroundCount.Value > 0)
                         View.BombCountText.text = $"{ViewModel.BombsAroundCount.Value}";
@@ -50,7 +51,7 @@ namespace Ui
             }
         }
 
-        private void HandleCellButtonClicked()
+        private void HandleCellButtonClicked(PointerEventData e)
         {
             ViewModel.ClickCell();
         }

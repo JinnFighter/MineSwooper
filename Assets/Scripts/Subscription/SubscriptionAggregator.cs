@@ -13,23 +13,34 @@ namespace Subscription
 
         public void ListenEvent(UnityEvent caller, UnityAction handler, bool invokeImmediately = false)
         {
-            if (caller == null)
-                throw new Exception("Attempted to pass null object for event caller");
-            if (handler == null)
-                throw new Exception("Attempted to pass null handler for event");
-
+            CheckParameters(caller, handler);
+            
             caller.AddListener(handler);
             AddSubscription(caller, handler, () => caller.RemoveListener(handler));
             if (invokeImmediately) handler.Invoke();
         }
+        
+        public void ListenEvent<TPropertyType>(UnityEvent<TPropertyType> caller, UnityAction<TPropertyType> handler, TPropertyType defaultValue = default, bool invokeImmediately = false)
+        {
+            CheckParameters(caller, handler);
+            
+            caller.AddListener(handler);
+            AddSubscription(caller, handler, () => caller.RemoveListener(handler));
+            if (invokeImmediately) handler.Invoke(defaultValue);
+        }
 
-        public void ListenEvent<TPropertyType>(IReactiveProperty<TPropertyType> caller, EventHandler<GenericEventArg<TPropertyType>> handler,
-            bool invokeImmediately = false)
+        private void CheckParameters<T, T1>(T caller, T1 handler)
         {
             if (caller == null)
                 throw new Exception("Attempted to pass null object for event caller");
             if (handler == null)
                 throw new Exception("Attempted to pass null handler for event");
+        }
+
+        public void ListenEvent<TPropertyType>(IReactiveProperty<TPropertyType> caller, EventHandler<GenericEventArg<TPropertyType>> handler,
+            bool invokeImmediately = false)
+        {
+            CheckParameters(caller, handler);
 
             caller.OnValueChanged += handler;
             AddSubscription(caller, handler, () => caller.OnValueChanged -= handler);
