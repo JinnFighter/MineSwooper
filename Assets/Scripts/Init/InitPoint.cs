@@ -10,7 +10,7 @@ namespace Init
         {
             var initSteps = new List<IInitStep>
             {
-                new ServicesInitStep(),
+                new GameEntitiesInitStep(),
                 new LaunchGameplayInitStep(),
             };
             foreach (var initStep in initSteps) await initStep.Execute();

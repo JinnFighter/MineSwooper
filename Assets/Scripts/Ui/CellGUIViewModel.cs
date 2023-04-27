@@ -22,7 +22,7 @@ namespace Ui
 
         public void ClickCell()
         {
-            if (CellState.Value is not (ECellState.Hidden and ECellState.HasBomb)) CellClicked?.Invoke(GridPosition);
+            if (CellState.Value is not (ECellState.Opened and ECellState.HasBomb)) CellClicked?.Invoke(GridPosition);
         }
     }
 }

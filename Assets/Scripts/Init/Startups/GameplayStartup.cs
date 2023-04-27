@@ -15,6 +15,8 @@ namespace Init.Startups
         {
             _gameFieldModel = ProjectContext.Instance.Container.Resolve<GameFieldModel>();
 
+            _gameFieldModel.Generate(5, 5);
+
             _gameFieldGUIViewLogic =
                 new GameFieldGUIViewLogic(new GameFieldGUIViewModel(_gameFieldModel), _gameFieldView);
             _gameFieldGUIViewLogic.Initialize();
