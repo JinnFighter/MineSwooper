@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5563079355372850040}
   - component: {fileID: 5563079355372850041}
   - component: {fileID: 2934358605375220377}
+  - component: {fileID: 1996600043413928387}
   m_Layer: 5
   m_Name: GameFieldView
   m_TagString: Untagged
@@ -89,3 +90,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73514fc8a35ac7040b6df10386dfc9e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <CellsParent>k__BackingField: {fileID: 1996600043413928387}
+--- !u!114 &1996600043413928387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5563079355372850039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8993a7d1bbb2a764586790a1ef84b89f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 3
+    m_Right: 3
+    m_Top: 3
+    m_Bottom: 3
+  m_ChildAlignment: 4
+  constrainChildrenSizeToSizeAtCount: 0
+  spacing: {x: 3, y: 3}
+  ExpandHorizontalSpacing: 0
+  ChildForceExpandWidth: 1
+  ChildForceExpandHeight: 1
+  invertOrder: 0
+  m_StartAxis: 0
