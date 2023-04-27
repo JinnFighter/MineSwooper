@@ -1,23 +1,35 @@
+using Core.Services;
 using UnityEngine;
 
 namespace Core.Models
 {
     public class GameFieldModel
     {
-        public GameFieldModel()
+        private readonly IGameFieldGeneratorService _gameFieldGeneratorService;
+
+        public GameFieldModel(IGameFieldGeneratorService gameFieldGeneratorService)
         {
-            var width = 5;
-            var height = 5;
-            CellsModels = new CellModel[width, height];
-            for (var i = 0; i < height; i++)
-            for (var j = 0; j < width; j++)
-                CellsModels[i, j] = new CellModel(ECellState.Hidden, false, new Vector2Int(i, j));
+            _gameFieldGeneratorService = gameFieldGeneratorService;
         }
 
-        public CellModel[,] CellsModels { get; }
+        public CellModel[,] CellsModels { get; private set; }
 
         public int Width => CellsModels.GetLength(0);
         public int Height => CellsModels.GetLength(1);
+
+        public void Generate(int width, int height)
+        {
+            CellsModels = new CellModel[width, height];
+            var bombs = _gameFieldGeneratorService.Generate(width, height);
+            for (var i = 0; i < width; i++)
+            for (var j = 0; j < height; j++)
+            {
+                var position = new Vector2Int(i, j);
+                var bombInfo = bombs[position];
+                CellsModels[i, j] =
+                    new CellModel(ECellState.Hidden, bombInfo.HasBomb, position, bombInfo.BombsAroundCount);
+            }
+        }
 
         public void CheckCellClick(Vector2Int clickPosition)
         {

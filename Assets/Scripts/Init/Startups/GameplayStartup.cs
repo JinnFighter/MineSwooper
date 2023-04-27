@@ -1,5 +1,4 @@
 using Core.Models;
-using Core.Services;
 using Ui;
 using UnityEngine;
 using Zenject;
@@ -16,12 +15,7 @@ namespace Init.Startups
         {
             _gameFieldModel = ProjectContext.Instance.Container.Resolve<GameFieldModel>();
 
-            var bombsGeneratorService = ProjectContext.Instance.Container.Resolve<IBombsGeneratorService>();
-
-            var bombPositions = bombsGeneratorService.Generate(_gameFieldModel.Width, _gameFieldModel.Height);
-
-            foreach (var bombPosition in bombPositions)
-                _gameFieldModel.CellsModels[bombPosition.x, bombPosition.y].PlantBomb();
+            _gameFieldModel.Generate(5, 5);
 
             _gameFieldGUIViewLogic =
                 new GameFieldGUIViewLogic(new GameFieldGUIViewModel(_gameFieldModel), _gameFieldView);

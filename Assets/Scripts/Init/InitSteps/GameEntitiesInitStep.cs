@@ -31,7 +31,7 @@ namespace Init.InitSteps
 
         private UniTask BindServices()
         {
-            _container.Bind<IBombsGeneratorService>().To<BombsGeneratorService>().AsSingle();
+            _container.Bind<IGameFieldGeneratorService>().To<GameFieldGeneratorService>().AsSingle();
             return UniTask.CompletedTask;
         }
 
