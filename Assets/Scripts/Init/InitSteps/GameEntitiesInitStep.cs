@@ -1,44 +1,53 @@
 using Core.Containers;
 using Core.Models;
+using Core.Services;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 namespace Init.InitSteps
 {
-    public class ServicesInitStep : IInitStep
+    public class GameEntitiesInitStep : IInitStep
     {
         private readonly DiContainer _container;
 
-        public ServicesInitStep()
+        public GameEntitiesInitStep()
         {
             _container = ProjectContext.Instance.Container;
         }
 
         public async UniTask Execute()
         {
-            await BindServices();
+            await BindEntities();
             await InitServices();
+        }
+
+        private async UniTask BindEntities()
+        {
+            await BindContainers();
+            await BindModels();
+            await BindServices();
         }
 
         private UniTask BindServices()
         {
-            BindContainers();
-            BindModels();
+            _container.Bind<IBombsGeneratorService>().To<BombsGeneratorService>().AsSingle();
             return UniTask.CompletedTask;
         }
 
-        private void BindContainers()
+        private UniTask BindContainers()
         {
             _container.Bind<SpritesContainer>().FromInstance(Resources.Load<SpritesContainer>("SpritesContainer"))
                 .AsSingle();
             _container.Bind<PrefabsContainer>().FromInstance(Resources.Load<PrefabsContainer>("PrefabsContainer"))
                 .AsSingle();
+            return UniTask.CompletedTask;
         }
 
-        private void BindModels()
+        private UniTask BindModels()
         {
             _container.Bind<GameFieldModel>().AsSingle();
+            return UniTask.CompletedTask;
         }
 
         private UniTask InitServices()
