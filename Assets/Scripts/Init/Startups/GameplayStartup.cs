@@ -7,24 +7,26 @@ namespace Init.Startups
 {
     public class GameplayStartup : MonoBehaviour
     {
-        [SerializeField] private GameFieldView _gameFieldView;
+        [SerializeField] private GameplayView _gameplayView;
         private GameFieldGUIViewLogic _gameFieldGUIViewLogic;
-        private GameFieldModel _gameFieldModel;
+        private GameplayGUIViewLogic _gameplayGUIViewLogic;
 
         private void Awake()
         {
-            _gameFieldModel = ProjectContext.Instance.Container.Resolve<GameFieldModel>();
+            var gameFieldModel = ProjectContext.Instance.Container.Resolve<GameFieldModel>();
 
-            _gameFieldModel.Generate(5, 5);
+            var bombCount = gameFieldModel.Generate(5, 5);
 
-            _gameFieldGUIViewLogic =
-                new GameFieldGUIViewLogic(new GameFieldGUIViewModel(_gameFieldModel), _gameFieldView);
-            _gameFieldGUIViewLogic.Initialize();
+            _gameplayGUIViewLogic = new GameplayGUIViewLogic(new GameplayGUIViewModel(
+                new BombCountGUIViewModel(bombCount),
+                new GameFieldGUIViewModel(gameFieldModel)), _gameplayView);
+
+            _gameplayGUIViewLogic.Initialize();
         }
 
         private void OnDestroy()
         {
-            _gameFieldGUIViewLogic.DeInitialize();
+            _gameplayGUIViewLogic.DeInitialize();
         }
     }
 }
