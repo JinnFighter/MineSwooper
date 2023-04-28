@@ -36,7 +36,7 @@ namespace MVVM
         public override void DeInitialize()
         {
             SubscriptionAggregator.Unsubscribe();
-            for (var i = _logics.Count - 1; i >= 0; i++) _logics[i].DeInitialize();
+            for (var i = _logics.Count - 1; i >= 0; i--) _logics[i].DeInitialize();
             _logics.Clear();
             _registeredLogics.Clear();
             DeInitializeInternal();
