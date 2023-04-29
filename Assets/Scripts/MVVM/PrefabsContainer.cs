@@ -8,5 +8,14 @@ namespace MVVM
     public class PrefabsContainer : ScriptableObject
     {
         public View CellView;
+
+        public View GetView(string key)
+        {
+            return key switch
+            {
+                "CellView" => CellView,
+                _ => null
+            };
+        }
     }
 }
