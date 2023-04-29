@@ -9,7 +9,7 @@ namespace Ui
     {
         private PrefabsContainer _prefabsContainer;
 
-        public GameFieldGUIViewLogic(IGameFieldGUIViewModel viewModel, GameFieldView view) : base(viewModel, view)
+        public GameFieldGUIViewLogic(IGameFieldGUIViewModel viewModel, GameFieldView view, IViewLogicService viewLogicService) : base(viewModel, view, viewLogicService)
         {
         }
 
@@ -30,9 +30,7 @@ namespace Ui
         protected override void AssembleSubViewLogics()
         {
             foreach (var cellViewModel in ViewModel.Cells)
-                RegisterSubViewLogic(cellViewModel,
-                    new CellGUIViewLogic(cellViewModel,
-                        Object.Instantiate(_prefabsContainer.CellView, View.CellsParent.transform).GetComponent<CellView>()));
+                RegisterSubViewLogic<CellGUIViewLogic, CellView>(cellViewModel, "CellView", View.CellsParent.transform);
         }
     }
 }

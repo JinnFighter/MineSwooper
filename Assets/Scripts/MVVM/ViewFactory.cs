@@ -11,9 +11,9 @@ namespace MVVM
             _prefabsContainer = prefabsContainer;
         }
 
-        public T GetView<T>(string key) where T : View
+        public T GetView<T>(string key, Transform parentTransform = null) where T : View
         {
-            return Object.Instantiate(_prefabsContainer.GetView(key)) as T;
+            return Object.Instantiate(_prefabsContainer.GetView(key), parentTransform) as T;
         }
     }
 }

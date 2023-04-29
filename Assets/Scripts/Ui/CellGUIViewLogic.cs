@@ -11,7 +11,7 @@ namespace Ui
     public class CellGUIViewLogic : ViewLogic<ICellGUIViewModel, CellView>
     {
         private SpritesContainer _spritesContainer;
-        public CellGUIViewLogic(ICellGUIViewModel viewModel, CellView view) : base(viewModel, view)
+        public CellGUIViewLogic(ICellGUIViewModel viewModel, CellView view, IViewLogicService viewLogicService) : base(viewModel, view, viewLogicService)
         {
         }
 

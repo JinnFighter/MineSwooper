@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Subscription;
+using UnityEngine;
 
 namespace MVVM
 {
@@ -9,6 +10,7 @@ namespace MVVM
         public abstract void Initialize();
         public abstract void DeInitialize();
     }
+
     public abstract class ViewLogic<TViewModel, TView> : BaseViewLogic where TViewModel : IViewModel where TView : View
     {
         private readonly List<BaseViewLogic> _logics = new();
@@ -16,15 +18,17 @@ namespace MVVM
         private readonly Dictionary<IViewModel, BaseViewLogic> _registeredLogics =
             new();
 
-        protected ViewLogic(TViewModel viewModel, TView view)
+        protected ViewLogic(TViewModel viewModel, TView view, IViewLogicService viewLogicService)
         {
             ViewModel = viewModel;
             View = view;
+            ViewLogicService = viewLogicService;
         }
 
         protected SubscriptionAggregator SubscriptionAggregator { get; } = new();
         protected TViewModel ViewModel { get; }
         protected TView View { get; }
+        private IViewLogicService ViewLogicService { get; }
 
         public override void Initialize()
         {
@@ -42,13 +46,28 @@ namespace MVVM
             DeInitializeInternal();
         }
 
-        public void RegisterSubViewLogic(IViewModel viewModel, BaseViewLogic viewLogic)
+        protected void RegisterSubViewLogic<TViewLogic, TView>(IViewModel viewModel, TView view)
+            where TViewLogic : BaseViewLogic where TView : View
         {
-            if (_registeredLogics.TryAdd(viewModel, viewLogic))
-                _logics.Add(viewLogic);
-            else
+            if (_registeredLogics.ContainsKey(viewModel))
                 throw new Exception(
-                    $"Error tyring to bind {viewLogic.GetType()} to model {viewModel.GetType()} : ViewLogic is already registered!");
+                    $"Error tyring to bind {typeof(TViewLogic)} to model {viewModel.GetType()} : ViewLogic is already registered!");
+
+            var viewLogic = ViewLogicService.CreateViewLogic<TViewLogic, TView>(viewModel, view);
+            _registeredLogics.Add(viewModel, viewLogic);
+            _logics.Add(viewLogic);
+        }
+
+        protected void RegisterSubViewLogic<TViewLogic, TView>(IViewModel viewModel, string key, Transform parentTransform = null)
+            where TViewLogic : BaseViewLogic where TView : View
+        {
+            if (_registeredLogics.ContainsKey(viewModel))
+                throw new Exception(
+                    $"Error tyring to bind {typeof(TViewLogic)} to model {viewModel.GetType()} : ViewLogic is already registered!");
+
+            var viewLogic = ViewLogicService.CreateViewLogic<TViewLogic, TView>(viewModel, key, parentTransform);
+            _registeredLogics.Add(viewModel, viewLogic);
+            _logics.Add(viewLogic);
         }
 
         protected virtual void AssembleSubViewLogics()
