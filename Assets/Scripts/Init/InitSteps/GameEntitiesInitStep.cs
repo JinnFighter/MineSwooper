@@ -32,6 +32,8 @@ namespace Init.InitSteps
 
         private UniTask BindServices()
         {
+            _container.Bind<IViewLogicService>().To<ViewLogicService>().AsSingle();
+            _container.Bind<ViewFactory>().AsSingle();
             _container.Bind<IGameFieldGeneratorService>().To<GameFieldGeneratorService>().AsSingle();
             return UniTask.CompletedTask;
         }
