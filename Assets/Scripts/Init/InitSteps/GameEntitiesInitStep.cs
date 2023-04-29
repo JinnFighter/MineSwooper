@@ -2,6 +2,7 @@ using Core.Containers;
 using Core.Models;
 using Core.Services;
 using Cysharp.Threading.Tasks;
+using MVVM;
 using UnityEngine;
 using Zenject;
 

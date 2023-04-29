@@ -1,12 +1,12 @@
 using System;
 using UnityEngine;
 
-namespace Core.Containers
+namespace MVVM
 {
     [Serializable]
     [CreateAssetMenu(menuName = "Containers/PrefabsContainer", fileName = "PrefabsContainer")]
     public class PrefabsContainer : ScriptableObject
     {
-        public GameObject CellView;
+        public View CellView;
     }
 }
