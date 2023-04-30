@@ -1,16 +1,18 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace MVVM
 {
     public class ViewLogicService : IViewLogicService
     {
-        public ViewLogicService(ViewFactory viewFactory)
-        {
-            ViewFactory = viewFactory;
-        }
+        public ViewFactory ViewFactory { get; private set; }
 
-        public ViewFactory ViewFactory { get; }
+        public UniTask Initialize()
+        {
+            ViewFactory = new ViewFactory(Resources.Load<PrefabsContainer>("PrefabsContainer"));
+            return UniTask.CompletedTask;
+        }
 
         public TViewLogic CreateViewLogic<TViewLogic, TView>(IViewModel viewModel, string viewKey,
             Transform parentTransform = null)
