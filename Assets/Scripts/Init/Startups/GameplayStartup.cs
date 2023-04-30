@@ -1,4 +1,5 @@
 using Core.Models;
+using MVVM;
 using Ui;
 using UnityEngine;
 using Zenject;
@@ -17,7 +18,9 @@ namespace Init.Startups
 
             var bombCount = gameFieldModel.Generate(5, 5);
 
-            _gameplayGUIViewLogic = new GameplayGUIViewLogic(new GameplayGUIViewModel(
+            var viewLogicService = ProjectContext.Instance.Container.Resolve<IViewLogicService>();
+
+            _gameplayGUIViewLogic = viewLogicService.CreateViewLogic<GameplayGUIViewLogic, GameplayView>(new GameplayGUIViewModel(
                 new BombCountGUIViewModel(bombCount),
                 new GameFieldGUIViewModel(gameFieldModel)), _gameplayView);
 

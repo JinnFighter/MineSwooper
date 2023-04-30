@@ -5,10 +5,6 @@ namespace Ui
 {
     public class BombCountGUIViewLogic : ViewLogic<IBombCountGUIViewModel, BombCountView>
     {
-        public BombCountGUIViewLogic(IBombCountGUIViewModel viewModel, BombCountView view) : base(viewModel, view)
-        {
-        }
-
         protected override void InitializeInternal()
         {
             SubscriptionAggregator.ListenEvent(ViewModel.BombCount, HandleBombCountChanged, true);

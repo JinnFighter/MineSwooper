@@ -2,6 +2,7 @@ using Core.Containers;
 using Core.Models;
 using Core.Services;
 using Cysharp.Threading.Tasks;
+using MVVM;
 using UnityEngine;
 using Zenject;
 
@@ -31,6 +32,10 @@ namespace Init.InitSteps
 
         private UniTask BindServices()
         {
+            _container.Bind<IViewLogicService>().To<ViewLogicService>()
+                .FromInstance(
+                    new ViewLogicService(new ViewFactory(Resources.Load<PrefabsContainer>("PrefabsContainer"))))
+                .AsSingle();
             _container.Bind<IGameFieldGeneratorService>().To<GameFieldGeneratorService>().AsSingle();
             return UniTask.CompletedTask;
         }
@@ -38,8 +43,6 @@ namespace Init.InitSteps
         private UniTask BindContainers()
         {
             _container.Bind<SpritesContainer>().FromInstance(Resources.Load<SpritesContainer>("SpritesContainer"))
-                .AsSingle();
-            _container.Bind<PrefabsContainer>().FromInstance(Resources.Load<PrefabsContainer>("PrefabsContainer"))
                 .AsSingle();
             return UniTask.CompletedTask;
         }
