@@ -47,6 +47,7 @@ namespace Init.InitSteps
 
         private UniTask BindModels()
         {
+            _container.Bind<GameplayModel>().AsSingle();
             _container.Bind<GameFieldModel>().AsSingle();
             return UniTask.CompletedTask;
         }
