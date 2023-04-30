@@ -11,10 +11,6 @@ namespace Ui
     public class CellGUIViewLogic : ViewLogic<ICellGUIViewModel, CellView>
     {
         private SpritesContainer _spritesContainer;
-        public CellGUIViewLogic(ICellGUIViewModel viewModel, CellView view, IViewLogicService viewLogicService) : base(viewModel, view, viewLogicService)
-        {
-        }
-
         protected override void InitializeInternal()
         {
             _spritesContainer = ProjectContext.Instance.Container.Resolve<SpritesContainer>();

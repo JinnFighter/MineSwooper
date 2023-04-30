@@ -9,6 +9,7 @@ namespace MVVM
     {
         public abstract void Initialize();
         public abstract void DeInitialize();
+        public abstract void Construct(ViewLogicConstructionContext constructionContext);
     }
 
     public abstract class ViewLogic<TViewModel, TView> : BaseViewLogic where TViewModel : IViewModel where TView : View
@@ -18,17 +19,10 @@ namespace MVVM
         private readonly Dictionary<IViewModel, BaseViewLogic> _registeredLogics =
             new();
 
-        protected ViewLogic(TViewModel viewModel, TView view, IViewLogicService viewLogicService)
-        {
-            ViewModel = viewModel;
-            View = view;
-            ViewLogicService = viewLogicService;
-        }
-
         protected SubscriptionAggregator SubscriptionAggregator { get; } = new();
-        protected TViewModel ViewModel { get; }
-        protected TView View { get; }
-        private IViewLogicService ViewLogicService { get; }
+        protected TViewModel ViewModel { get; private set; }
+        protected TView View { get; private set; }
+        private IViewLogicService ViewLogicService { get; set; }
 
         public override void Initialize()
         {
@@ -44,6 +38,13 @@ namespace MVVM
             _logics.Clear();
             _registeredLogics.Clear();
             DeInitializeInternal();
+        }
+
+        public override void Construct(ViewLogicConstructionContext constructionContext)
+        {
+            ViewModel = (TViewModel)constructionContext.ViewModel;
+            View = (TView)constructionContext.View;
+            ViewLogicService = constructionContext.ViewLogicService;
         }
 
         protected void RegisterSubViewLogic<TViewLogic, TView>(IViewModel viewModel, TView view)

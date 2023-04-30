@@ -16,15 +16,19 @@ namespace MVVM
             Transform parentTransform = null)
             where TViewLogic : BaseViewLogic where TView : View
         {
-            return Activator.CreateInstance(typeof(TViewLogic), viewModel, ViewFactory.GetView<TView>(viewKey, parentTransform), this) as
-                TViewLogic;
+            var viewLogic = Activator.CreateInstance(typeof(TViewLogic)) as TViewLogic;
+            viewLogic.Construct(new ViewLogicConstructionContext(viewModel,
+                ViewFactory.GetView<TView>(viewKey, parentTransform), this));
+            return viewLogic;
         }
 
         public TViewLogic CreateViewLogic<TViewLogic, TView>(IViewModel viewModel, TView view)
             where TViewLogic : BaseViewLogic where TView : View
         {
-            return Activator.CreateInstance(typeof(TViewLogic), viewModel, view, this) as
-                TViewLogic;
+            var viewLogic = Activator.CreateInstance(typeof(TViewLogic)) as TViewLogic;
+            viewLogic.Construct(new ViewLogicConstructionContext(viewModel,
+                view, this));
+            return viewLogic;
         }
     }
 }
