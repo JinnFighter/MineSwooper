@@ -10,6 +10,7 @@ namespace Core.Models
     {
         private readonly ReactiveProperty<int> _currentBombCount = new();
         private readonly IGameFieldGeneratorService _gameFieldGeneratorService;
+        private readonly ReactiveProperty<EGameplayState> _gameplayState = new(EGameplayState.Playing);
         private readonly Dictionary<Vector2Int, int> _searchDict = new();
         private bool _isGameActive;
 
@@ -18,6 +19,8 @@ namespace Core.Models
             GameFieldModel = gameFieldModel;
             _gameFieldGeneratorService = gameFieldGeneratorService;
         }
+
+        public IReactiveProperty<EGameplayState> GameplayState => _gameplayState;
 
         public IReactiveProperty<int> CurrentBombCount => _currentBombCount;
 
@@ -78,7 +81,7 @@ namespace Core.Models
                 foreach (var cellModel in GameFieldModel.CellsModels)
                     if (cellModel.HasBomb)
                         cellModel.SetState(ECellState.HasBomb);
-                Debug.Log("Game over!");
+                _gameplayState.Value = EGameplayState.GameOver;
             }
             else
             {

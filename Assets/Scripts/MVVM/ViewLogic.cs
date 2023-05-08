@@ -70,6 +70,20 @@ namespace MVVM
             _registeredLogics.Add(viewModel, viewLogic);
             _logics.Add(viewLogic);
         }
+        
+        protected TViewLogic CreateSubViewLogic<TViewLogic, TView>(IViewModel viewModel, string key, Transform parentTransform = null)
+            where TViewLogic : BaseViewLogic where TView : View
+        {
+            if (_registeredLogics.ContainsKey(viewModel))
+                throw new Exception(
+                    $"Error tyring to bind {typeof(TViewLogic)} to model {viewModel.GetType()} : ViewLogic is already registered!");
+
+            var viewLogic = ViewLogicService.CreateViewLogic<TViewLogic, TView>(viewModel, key, parentTransform);
+            _registeredLogics.Add(viewModel, viewLogic);
+            _logics.Add(viewLogic);
+            viewLogic.Initialize();
+            return viewLogic;
+        }
 
         protected virtual void AssembleSubViewLogics()
         {

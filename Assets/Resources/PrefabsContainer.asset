@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PrefabsContainer
   m_EditorClassIdentifier: 
   CellView: {fileID: 1860159683784752235, guid: 19ec5e820d6bd2a499d728a5fab86f15, type: 3}
+  GameOverView: {fileID: 1222863061967798384, guid: 1e86d7f311fe0c8448c5de03b49a5cf9, type: 3}

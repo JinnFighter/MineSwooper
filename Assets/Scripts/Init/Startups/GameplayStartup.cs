@@ -25,7 +25,7 @@ namespace Init.Startups
             _gameplayGUIViewLogic = viewLogicService.CreateViewLogic<GameplayGUIViewLogic, GameplayView>(
                 new GameplayGUIViewModel(
                     new BombCountGUIViewModel(_gameplayModel.CurrentBombCount),
-                    new GameFieldGUIViewModel(gameFieldModel)), _gameplayView);
+                    new GameFieldGUIViewModel(gameFieldModel), _gameplayModel.GameplayState), _gameplayView);
 
             _gameplayGUIViewLogic.Initialize();
         }
