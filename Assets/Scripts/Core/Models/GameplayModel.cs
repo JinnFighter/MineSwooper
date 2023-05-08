@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Core.Services;
 using UnityEngine;
@@ -7,6 +8,7 @@ namespace Core.Models
     public class GameplayModel
     {
         private readonly IGameFieldGeneratorService _gameFieldGeneratorService;
+        private readonly Dictionary<Vector2Int, int> _searchDict = new();
 
         public GameplayModel(GameFieldModel gameFieldModel, IGameFieldGeneratorService gameFieldGeneratorService)
         {
@@ -26,17 +28,35 @@ namespace Core.Models
 
         public void CheckClickedCell(Vector2Int position)
         {
-            var cell = GameFieldModel.CellsModels[position.x, position.y];
+            var cell = GameFieldModel[position];
+
             if (cell.HasBomb)
             {
                 foreach (var cellModel in GameFieldModel.CellsModels)
-                    cellModel.SetState(cellModel.HasBomb ? ECellState.HasBomb : ECellState.Opened);
+                    if (cellModel.HasBomb)
+                        cellModel.SetState(ECellState.HasBomb);
                 Debug.Log("Game over!");
             }
             else
             {
-                cell.SetState(ECellState.Opened);
+                _searchDict.Clear();
+                OpenCells(position);
             }
+        }
+
+        private void OpenCells(Vector2Int position)
+        {
+            var cell = GameFieldModel[position];
+            if (cell.CellState.Value == ECellState.Opened) return;
+            if (_searchDict.ContainsKey(position)) return;
+
+            cell.SetState(ECellState.Opened);
+            _searchDict.TryAdd(position, cell.BombsAroundCount.Value);
+            if (cell.BombsAroundCount.Value > 0) return;
+
+            foreach (var cellModel in GameFieldModel.GetNearestCells(position)
+                         .Where(cellModel => !_searchDict.TryGetValue(cellModel.GridPosition, out _)))
+                OpenCells(cellModel.GridPosition);
         }
     }
 }

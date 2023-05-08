@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BombSprite: {fileID: 21300000, guid: c237d5ada9ab38e439c1f6955af02310, type: 3}
   EmptySprite: {fileID: 21300000, guid: 2c4ea72d980a0934e9d9b5f31e516106, type: 3}
-  MarkedSprite: {fileID: 21300000, guid: 18be224af2384d0499dd3d5d119c6531, type: 3}
+  MarkedSprite: {fileID: 21300000, guid: 61a6525fd002c9b4795ca99d5851a067, type: 3}
+  HiddenSprite: {fileID: 21300000, guid: 244c203c4882eb745abf22620dbcfb48, type: 3}

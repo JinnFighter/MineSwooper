@@ -10,5 +10,6 @@ namespace Core.Containers
         public Sprite BombSprite;
         public Sprite EmptySprite;
         public Sprite MarkedSprite;
+        public Sprite HiddenSprite;
     }
 }

@@ -24,7 +24,7 @@ namespace Ui
             {
                 case ECellState.Hidden:
                     View.ClickableImage.gameObject.SetActive(true);
-                    View.ClickableImage.sprite = _spritesContainer.EmptySprite;
+                    View.ClickableImage.sprite = _spritesContainer.HiddenSprite;
                     break;
                 case ECellState.Marked:
                     View.ClickableImage.gameObject.SetActive(true);
