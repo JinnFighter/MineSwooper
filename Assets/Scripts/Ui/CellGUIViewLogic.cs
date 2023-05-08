@@ -49,7 +49,7 @@ namespace Ui
 
         private void HandleCellButtonClicked(PointerEventData e)
         {
-            ViewModel.ClickCell();
+            ViewModel.ClickCell(e);
         }
     }
 }

@@ -8,5 +8,6 @@ namespace Ui
         ICellGUIViewModel[,] Cells { get; }
 
         void HandleCellClicked(Vector2Int position);
+        void TryMarkCell(Vector2Int position);
     }
 }

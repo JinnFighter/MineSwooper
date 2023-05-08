@@ -1,5 +1,6 @@
 ﻿using MVVM;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Ui
 {
@@ -11,9 +12,17 @@ namespace Ui
                 SubscriptionAggregator.ListenEvent(cellGUIViewModel.CellClicked, HandleCellClicked);
         }
 
-        private void HandleCellClicked(Vector2Int arg0)
+        private void HandleCellClicked(Vector2Int arg0, PointerEventData pointerEventData)
         {
-            ViewModel.HandleCellClicked(arg0);
+            switch (pointerEventData.button)
+            {
+                case PointerEventData.InputButton.Left:
+                    ViewModel.HandleCellClicked(arg0);
+                    break;
+                case PointerEventData.InputButton.Right:
+                    ViewModel.TryMarkCell(arg0);
+                    break;
+            }
         }
 
         protected override void AssembleSubViewLogics()

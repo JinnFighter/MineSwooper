@@ -53,5 +53,21 @@ namespace Core.Models
         {
             CellClicked?.Invoke(clickPosition);
         }
+
+        public void TryMarkCell(Vector2Int position)
+        {
+            var cell = this[position];
+            switch (cell.CellState.Value)
+            {
+                case ECellState.Opened:
+                    return;
+                case ECellState.Hidden:
+                    cell.SetState(ECellState.Marked);
+                    break;
+                case ECellState.Marked:
+                    cell.SetState(ECellState.Hidden);
+                    break;
+            }
+        }
     }
 }

@@ -2,6 +2,7 @@
 using Reactivity;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace Ui
 {
@@ -18,11 +19,11 @@ namespace Ui
         public IReactiveProperty<int> BombsAroundCount => _model.BombsAroundCount;
         public bool HasBomb => _model.HasBomb;
         public Vector2Int GridPosition => _model.GridPosition;
-        public UnityEvent<Vector2Int> CellClicked { get; } = new();
+        public UnityEvent<Vector2Int, PointerEventData> CellClicked { get; } = new();
 
-        public void ClickCell()
+        public void ClickCell(PointerEventData pointerEventData)
         {
-            if (CellState.Value is not (ECellState.Opened and ECellState.HasBomb)) CellClicked?.Invoke(GridPosition);
+            if (CellState.Value is not (ECellState.Opened and ECellState.HasBomb)) CellClicked?.Invoke(GridPosition, pointerEventData);
         }
     }
 }

@@ -23,5 +23,10 @@ namespace Ui
         {
             _gameFieldModel.CheckCellClick(position);
         }
+
+        public void TryMarkCell(Vector2Int position)
+        {
+            _gameFieldModel.TryMarkCell(position);
+        }
     }
 }

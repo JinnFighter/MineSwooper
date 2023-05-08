@@ -28,6 +28,15 @@ namespace Subscription
             AddSubscription(caller, handler, () => caller.RemoveListener(handler));
             if (invokeImmediately) handler.Invoke(defaultValue);
         }
+        
+        public void ListenEvent<TPropertyType, TPropertyType2>(UnityEvent<TPropertyType, TPropertyType2> caller, UnityAction<TPropertyType, TPropertyType2> handler, TPropertyType defaultValue = default, TPropertyType2 defaultValue2 = default, bool invokeImmediately = false)
+        {
+            CheckParameters(caller, handler);
+            
+            caller.AddListener(handler);
+            AddSubscription(caller, handler, () => caller.RemoveListener(handler));
+            if (invokeImmediately) handler.Invoke(defaultValue, defaultValue2);
+        }
 
         private void CheckParameters<T, T1>(T caller, T1 handler)
         {
