@@ -24,7 +24,7 @@ namespace Ui
             {
                 case ECellState.Hidden:
                     View.ClickableImage.gameObject.SetActive(true);
-                    View.ClickableImage.sprite = _spritesContainer.EmptySprite;
+                    View.ClickableImage.sprite = _spritesContainer.HiddenSprite;
                     break;
                 case ECellState.Marked:
                     View.ClickableImage.gameObject.SetActive(true);
@@ -49,7 +49,7 @@ namespace Ui
 
         private void HandleCellButtonClicked(PointerEventData e)
         {
-            ViewModel.ClickCell();
+            ViewModel.ClickCell(e);
         }
     }
 }

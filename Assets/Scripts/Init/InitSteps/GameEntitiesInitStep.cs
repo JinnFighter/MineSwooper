@@ -33,8 +33,6 @@ namespace Init.InitSteps
         private UniTask BindServices()
         {
             _container.Bind<IViewLogicService>().To<ViewLogicService>()
-                .FromInstance(
-                    new ViewLogicService(new ViewFactory(Resources.Load<PrefabsContainer>("PrefabsContainer"))))
                 .AsSingle();
             _container.Bind<IGameFieldGeneratorService>().To<GameFieldGeneratorService>().AsSingle();
             return UniTask.CompletedTask;
@@ -49,14 +47,14 @@ namespace Init.InitSteps
 
         private UniTask BindModels()
         {
+            _container.Bind<GameplayModel>().AsSingle();
             _container.Bind<GameFieldModel>().AsSingle();
             return UniTask.CompletedTask;
         }
 
-        private UniTask InitServices()
+        private async UniTask InitServices()
         {
-            Debug.Log("Services initialized");
-            return UniTask.CompletedTask;
+            await _container.Resolve<IViewLogicService>().Initialize();
         }
     }
 }

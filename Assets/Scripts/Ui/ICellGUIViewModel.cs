@@ -3,6 +3,7 @@ using MVVM;
 using Reactivity;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 namespace Ui
 {
@@ -12,7 +13,7 @@ namespace Ui
         IReactiveProperty<int> BombsAroundCount { get; }
         bool HasBomb { get; }
         Vector2Int GridPosition { get; }
-        UnityEvent<Vector2Int> CellClicked { get; }
-        void ClickCell();
+        UnityEvent<Vector2Int, PointerEventData> CellClicked { get; }
+        void ClickCell(PointerEventData pointerEventData);
     }
 }

@@ -4,13 +4,11 @@ namespace Ui
 {
     public class BombCountGUIViewModel : IBombCountGUIViewModel
     {
-        private readonly ReactiveProperty<int> _bombCount;
-
-        public BombCountGUIViewModel(int bombCount)
+        public BombCountGUIViewModel(IReactiveProperty<int> bombCount)
         {
-            _bombCount = new ReactiveProperty<int>(bombCount);
+            BombCount = bombCount;
         }
 
-        public IReactiveProperty<int> BombCount => _bombCount;
+        public IReactiveProperty<int> BombCount { get; }
     }
 }
