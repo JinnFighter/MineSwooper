@@ -1,5 +1,4 @@
 ﻿using MVVM;
-using UnityEngine;
 
 namespace Ui
 {
@@ -13,12 +12,12 @@ namespace Ui
 
         private void HandleQuitButtonClicked()
         {
-            Debug.Log("Quick Clicked");
+            ViewModel.QuitAction.Invoke();
         }
 
         private void HandleRestartButtonClicked()
         {
-            Debug.Log("Restart Clicked");
+            ViewModel.RestartAction.Invoke();
         }
     }
 }
