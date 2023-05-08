@@ -19,8 +19,7 @@ namespace Init.Startups
             var gameFieldModel = _gameplayModel.GameFieldModel;
 
             _gameplayModel.GenerateGameData(5, 5);
-
-            _gameplayModel.GameFieldModel.CellClicked.AddListener(_gameplayModel.CheckClickedCell);
+            _gameplayModel.SetGameActive(true);
             var viewLogicService = ProjectContext.Instance.Container.Resolve<IViewLogicService>();
 
             _gameplayGUIViewLogic = viewLogicService.CreateViewLogic<GameplayGUIViewLogic, GameplayView>(
@@ -33,7 +32,7 @@ namespace Init.Startups
 
         private void OnDestroy()
         {
-            _gameplayModel.GameFieldModel.CellClicked.RemoveListener(_gameplayModel.CheckClickedCell);
+            _gameplayModel.SetGameActive(false);
             _gameplayGUIViewLogic.DeInitialize();
         }
     }

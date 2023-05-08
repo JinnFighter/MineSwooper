@@ -9,6 +9,7 @@ namespace Core.Models
     {
         private readonly IGameFieldGeneratorService _gameFieldGeneratorService;
         private readonly Dictionary<Vector2Int, int> _searchDict = new();
+        private bool _isGameActive;
 
         public GameplayModel(GameFieldModel gameFieldModel, IGameFieldGeneratorService gameFieldGeneratorService)
         {
@@ -19,6 +20,17 @@ namespace Core.Models
         public int BombCount { get; private set; }
         public GameFieldModel GameFieldModel { get; }
 
+        public void SetGameActive(bool isActive)
+        {
+            if (_isGameActive == isActive) return;
+
+            if (isActive)
+                GameFieldModel.CellClicked.AddListener(CheckClickedCell);
+            else
+                GameFieldModel.CellClicked.RemoveListener(CheckClickedCell);
+            _isGameActive = isActive;
+        }
+
         public void GenerateGameData(int width, int height)
         {
             var cellDatas = _gameFieldGeneratorService.Generate(width, height);
@@ -28,6 +40,7 @@ namespace Core.Models
 
         public void CheckClickedCell(Vector2Int position)
         {
+            if (!_isGameActive) return;
             var cell = GameFieldModel[position];
 
             if (cell.HasBomb)
