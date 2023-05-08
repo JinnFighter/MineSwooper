@@ -13,6 +13,7 @@ namespace Core.Models
         public int Height => CellsModels.GetLength(1);
 
         public UnityEvent<Vector2Int> CellClicked { get; } = new();
+        public UnityEvent<Vector2Int> CellMarked { get; } = new();
 
         public CellModel this[Vector2Int position] => CellsModels[position.x, position.y];
 
@@ -62,10 +63,10 @@ namespace Core.Models
                 case ECellState.Opened:
                     return;
                 case ECellState.Hidden:
-                    cell.SetState(ECellState.Marked);
+                    CellMarked?.Invoke(position);
                     break;
                 case ECellState.Marked:
-                    cell.SetState(ECellState.Hidden);
+                    CellMarked?.Invoke(position);
                     break;
             }
         }
